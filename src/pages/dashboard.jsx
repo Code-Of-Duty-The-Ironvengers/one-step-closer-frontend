@@ -1,41 +1,58 @@
-import React from "react";
-import { addMonths, differenceInCalendarDays } from "date-fns";
-import slugify from "slugify";
-import { Link } from "react-router-dom";
-
-const FAKE_GOALS = [
-  {
-    title: "Get a job",
-    description:
-      "Make money. I payed for the bootcamp and now my finances are in need of some love",
-    deadline: addMonths(new Date(), 2),
-    slug: slugify("Get a job", { lower: true }),
-  },
-  {
-    title: "Save money",
-    description:
-      "Save money. I payed for the bootcamp and now my finances are in need of some love",
-    deadline: new Date("2023-07-01"),
-    slug: slugify("Save money", {
-      lower: true,
-    }),
-  },
-];
+import axios from "axios";
+import { differenceInCalendarDays } from "date-fns";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
-  function goToGoal() {}
+  // useState and useEffect
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get("http://localhost:5005/dashboard")
+      .then((result) => {
+        setData(result.data.goals);
+      })
+      .catch((err) => {
+        console.log("err:", err);
+        setIsError(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return <div>Getting data...</div>;
+  }
+
+  if (isError) {
+    return <div>Doh</div>;
+  }
 
   return (
     <div>
       <h1>Dashboard</h1>
       <div>
-        {FAKE_GOALS.map((goal) => {
+        {data.map((goal) => {
           return (
-            <article key={goal.slug} style={{ cursor: "pointer" }}>
+            <article
+              key={goal.slug}
+              onClick={() => {
+                navigate(`/goal/${goal.slug}`);
+              }}
+              style={{ cursor: "pointer" }}
+            >
               <h3>{goal.title}</h3>
               <p>{goal.description}</p>
               <div>
-                {differenceInCalendarDays(goal.deadline, new Date())} days left
+                {differenceInCalendarDays(new Date(goal.deadline), new Date())}{" "}
+                days left
               </div>
             </article>
           );

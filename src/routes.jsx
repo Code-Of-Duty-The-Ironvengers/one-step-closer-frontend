@@ -9,6 +9,7 @@ import Login from "./pages/login";
 import Profile from "./pages/profile";
 import SignUp from "./pages/sign-up";
 import SingleProcess from "./pages/single-process";
+import SingleGoal from "./pages/single-goal";
 
 const STATUS = {
   NOT_LOGGED_IN: "NOT_LOGGED_IN",
@@ -69,6 +70,12 @@ const ROUTES = [
     path: APP_PATHS.SINGLE_PROCESS,
     element: <SingleProcess />,
     name: "Doesnt matter now",
+    status: STATUS.LOGGED_IN,
+  },
+  {
+    path: APP_PATHS.SINGLE_GOAL,
+    element: <SingleGoal />,
+    name: "Single Goal",
     status: STATUS.LOGGED_IN,
   },
 ];
