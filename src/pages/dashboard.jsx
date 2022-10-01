@@ -31,7 +31,7 @@ function Dashboard() {
       <div>
         {FAKE_GOALS.map((goal) => {
           return (
-            <article style={{ cursor: "pointer" }}>
+            <article key={goal.slug} style={{ cursor: "pointer" }}>
               <h3>{goal.title}</h3>
               <p>{goal.description}</p>
               <div>
