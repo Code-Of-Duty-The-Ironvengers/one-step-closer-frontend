@@ -6,18 +6,20 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [data, setData] = useState("");
   const [user, setUser] = useState(undefined);
 
-  function authenticateUser(user) {
+  function authenticateUser({ user, token }) {
     setUser(user);
+    localStorage.setItem("ACCESS_TOKEN_SUPER_SAFE", token);
   }
 
   useEffect(() => {
     axios
-      .get("http://localhost:5005")
+      .post("http://localhost:5005/auth/get-me", {
+        token: localStorage.getItem("ACCESS_TOKEN_SUPER_SAFE"),
+      })
       .then((result) => {
-        setData(result.data.hiClass);
+        setUser(result.data.user);
       })
       .catch((err) => {
         console.log("err:", err);
@@ -27,7 +29,6 @@ function App() {
   return (
     <div className="App">
       <Navbar {...user} />
-      <h1>{data}</h1>
       <Routes>
         {ROUTES.filter((routeInformation) => {
           if (user) {

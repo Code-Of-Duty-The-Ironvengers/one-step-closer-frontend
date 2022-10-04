@@ -33,7 +33,7 @@ function SignUp(props) {
       .post("http://localhost:5005/auth/signup", form)
       .then((result) => {
         console.log("user:", result);
-        props.authenticateUser(result.data.user);
+        props.authenticateUser(result.data);
       })
       .catch((err) => {
         console.log("err:", err);
