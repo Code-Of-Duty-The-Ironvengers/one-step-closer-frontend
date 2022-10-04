@@ -1,12 +1,17 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import ROUTES from "./routes";
+import ROUTES, { STATUS } from "./routes";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 function App() {
   const [data, setData] = useState("");
+  const [user, setUser] = useState(undefined);
+
+  function authenticateUser(user) {
+    setUser(user);
+  }
 
   useEffect(() => {
     axios
@@ -21,14 +26,25 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar {...user} />
       <h1>{data}</h1>
       <Routes>
-        {ROUTES.map((element) => {
+        {ROUTES.filter((routeInformation) => {
+          if (user) {
+            return true;
+          }
+
+          return (
+            routeInformation.status === STATUS.NOT_LOGGED_IN ||
+            routeInformation.status === STATUS.DONT_CARE
+          );
+        }).map(({ element: Element, ...element }) => {
           return (
             <Route
               key={element.path}
               {...element}
+              element={<Element authenticateUser={authenticateUser} />}
+
               // path={element.path}
               // element={element.element}
             />

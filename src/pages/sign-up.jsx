@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function SignUp() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+function SignUp(props) {
+  console.log("prop:", props);
+  // const [username, setUsername] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [name, setName] = useState("");
+  // const [password, setPassword] = useState("");
 
   const [form, setForm] = useState({
     username: "",
@@ -30,8 +31,9 @@ function SignUp() {
     //   .then(console.log);
     axios
       .post("http://localhost:5005/auth/signup", form)
-      .then((user) => {
-        console.log("user:", user);
+      .then((result) => {
+        console.log("user:", result);
+        props.authenticateUser(result.data.user);
       })
       .catch((err) => {
         console.log("err:", err);
@@ -46,10 +48,10 @@ function SignUp() {
     setForm({ ...form, [name]: value });
   }
 
-  const handleUsernameChange = (e) => setUsername(e.target.value);
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
-  const handleNameChange = (e) => setName(e.target.value);
+  // const handleUsernameChange = (e) => setUsername(e.target.value);
+  // const handleEmailChange = (e) => setEmail(e.target.value);
+  // const handlePasswordChange = (e) => setPassword(e.target.value);
+  // const handleNameChange = (e) => setName(e.target.value);
 
   return (
     <div>
