@@ -19,7 +19,15 @@ function SignUp() {
     e.preventDefault();
 
     console.log("Tried submitting the form");
-
+    // fetch("http://localhost:5005/auth/signup", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(form),
+    // })
+    //   .then((r) => r.json())
+    //   .then(console.log);
     axios
       .post("http://localhost:5005/auth/signup", form)
       .then((user) => {
