@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import ROUTES, { STATUS } from "./routes";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import apiClient from "./service/api-client";
 
