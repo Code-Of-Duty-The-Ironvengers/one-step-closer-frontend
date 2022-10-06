@@ -5,6 +5,9 @@ import ROUTES, { STATUS } from "./routes";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+const getMeUrl = process.env.REACT_APP_BACKEND_URL + "/auth/get-me";
+console.log("GetMeUrl:", getMeUrl);
+
 function App() {
   const [user, setUser] = useState(undefined);
 
@@ -15,10 +18,11 @@ function App() {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5005/auth/get-me", {
+      .post(getMeUrl, {
         token: localStorage.getItem("ACCESS_TOKEN_SUPER_SAFE"),
       })
       .then((result) => {
+        console.log("result:", result);
         setUser(result.data.user);
       })
       .catch((err) => {
