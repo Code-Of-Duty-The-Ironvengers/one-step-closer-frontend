@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useUser } from "../context/user.context";
 
-function Login(props) {
+function Login() {
+  const { authenticate } = useUser();
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -25,7 +27,7 @@ function Login(props) {
       .post("http://localhost:5005/auth/login", form)
       .then((result) => {
         console.log("user:", result);
-        props.authenticateUser(result.data);
+        authenticate(result.data);
       })
       .catch((err) => {
         console.log("err:", err);

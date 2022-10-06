@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useUser } from "../context/user.context";
 
-function SignUp(props) {
-  console.log("prop:", props);
+function SignUp() {
   // const [username, setUsername] = useState("");
   // const [email, setEmail] = useState("");
   // const [name, setName] = useState("");
   // const [password, setPassword] = useState("");
+  const { authenticate } = useUser();
 
   const [form, setForm] = useState({
     username: "",
@@ -33,7 +34,7 @@ function SignUp(props) {
       .post("http://localhost:5005/auth/signup", form)
       .then((result) => {
         console.log("user:", result);
-        props.authenticateUser(result.data);
+        authenticate(result.data);
       })
       .catch((err) => {
         console.log("err:", err);

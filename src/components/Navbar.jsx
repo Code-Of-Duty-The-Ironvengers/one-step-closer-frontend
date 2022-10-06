@@ -1,14 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ROUTES, { STATUS } from "../routes";
+import { useUser } from "../context/user.context";
 
-function Navbar({ username }) {
+function Navbar() {
+  const { user } = useUser();
+
   return (
     <div>
       <nav style={{ display: "flex", justifyContent: "space-around" }}>
         {ROUTES.filter((routeInformation) => {
-          if (username) {
-            return true;
+          if (user) {
+            return routeInformation.status !== STATUS.NOT_LOGGED_IN;
           }
 
           return (
@@ -23,7 +26,7 @@ function Navbar({ username }) {
           );
         })}
       </nav>
-      {username && <p>Hey {username}</p>}
+      {user && <p>Hey {user.username}</p>}
     </div>
   );
 }
