@@ -13,18 +13,30 @@ function App() {
     localStorage.setItem("ACCESS_TOKEN_SUPER_SAFE", token);
   }
 
+  function logout() {
+    localStorage.removeItem("ACCESS_TOKEN_SUPER_SAFE");
+    setUser(undefined);
+  }
+
   useEffect(() => {
     apiClient
-      .post("/auth/get-me", {
-        token: localStorage.getItem("ACCESS_TOKEN_SUPER_SAFE"),
-      })
+      .get("/auth/get-me")
       .then((result) => {
         console.log("result:", result);
         setUser(result.data.user);
       })
-      .catch((err) => {
-        console.log("err:", err);
-      });
+      .catch(console.error);
+    // apiClient
+    //   .post("/auth/get-me", {
+    //     token: localStorage.getItem("ACCESS_TOKEN_SUPER_SAFE"),
+    //   })
+    //   .then((result) => {
+    //     console.log("result:", result);
+    //     setUser(result.data.user);
+    //   })
+    //   .catch((err) => {
+    //     console.log("err:", err);
+    //   });
   }, []);
 
   return (
