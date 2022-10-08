@@ -1,6 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import APP_PATHS from "../app-paths";
 import { useUser } from "../context/user.context";
+
+// const handleUsernameChange = (e) => setUsername(e.target.value);
+// const handleEmailChange = (e) => setEmail(e.target.value);
+// const handlePasswordChange = (e) => setPassword(e.target.value);
+// const handleNameChange = (e) => setName(e.target.value);
 
 function Login() {
   const { authenticate } = useUser();
@@ -8,7 +15,7 @@ function Login() {
     username: "",
     password: "",
   });
-  console.log("form:", form);
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -28,6 +35,7 @@ function Login() {
       .then((result) => {
         console.log("user:", result);
         authenticate(result.data);
+        navigate(APP_PATHS.PROFILE);
       })
       .catch((err) => {
         console.log("err:", err);
@@ -42,10 +50,9 @@ function Login() {
     setForm({ ...form, [name]: value });
   }
 
-  // const handleUsernameChange = (e) => setUsername(e.target.value);
-  // const handleEmailChange = (e) => setEmail(e.target.value);
-  // const handlePasswordChange = (e) => setPassword(e.target.value);
-  // const handleNameChange = (e) => setName(e.target.value);
+  // if (user) {
+  //   return <Navigate to={APP_PATHS.PROFILE} replace />;
+  // }
 
   return (
     <div>

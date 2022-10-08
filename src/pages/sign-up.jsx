@@ -1,5 +1,7 @@
-import React, { useState } from "react";
 import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import APP_PATHS from "../app-paths";
 import { useUser } from "../context/user.context";
 
 function SignUp() {
@@ -15,7 +17,7 @@ function SignUp() {
     name: "",
     password: "",
   });
-  console.log("form:", form);
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -35,6 +37,7 @@ function SignUp() {
       .then((result) => {
         console.log("user:", result);
         authenticate(result.data);
+        navigate(APP_PATHS.PROFILE);
       })
       .catch((err) => {
         console.log("err:", err);

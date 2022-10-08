@@ -10,6 +10,7 @@ import Profile from "./pages/profile";
 import SignUp from "./pages/sign-up";
 import SingleProcess from "./pages/single-process";
 import SingleGoal from "./pages/single-goal";
+import UnauthenticatedWrapper from "./wrapper/unauthenticated.wrapper";
 
 export const STATUS = {
   NOT_LOGGED_IN: "NOT_LOGGED_IN",
@@ -20,67 +21,75 @@ export const STATUS = {
 const ROUTES = [
   {
     path: APP_PATHS.HOME,
-    element: Home,
+    element: <Home />,
     name: "Home",
     status: STATUS.DONT_CARE,
   },
   {
     path: APP_PATHS.CREATE_PROCESS,
-    element: CreateProcess,
+    element: <CreateProcess />,
     name: "Create Process",
     status: STATUS.LOGGED_IN,
   },
   {
     path: APP_PATHS.DASHBOARD,
-    element: Dashboard,
+    element: <Dashboard />,
     name: "Dashboard",
     status: STATUS.LOGGED_IN,
   },
   {
     path: APP_PATHS.GOALS_CREATE,
-    element: GoalsCreate,
+    element: <GoalsCreate />,
     name: "Create a Goal",
     status: STATUS.LOGGED_IN,
   },
   {
     path: APP_PATHS.GOALS_DASHBOARD,
-    element: GoalsDashboard,
+    element: <GoalsDashboard />,
     name: "See your goals",
     status: STATUS.LOGGED_IN,
   },
   {
     path: APP_PATHS.GOALS_EDIT,
-    element: GoalsEdit,
+    element: <GoalsEdit />,
     name: "Edit your goals",
     status: STATUS.LOGGED_IN,
   },
   {
     path: APP_PATHS.LOG_IN,
-    element: Login,
+    element: (
+      <UnauthenticatedWrapper>
+        <Login />
+      </UnauthenticatedWrapper>
+    ),
     name: "Login",
     status: STATUS.NOT_LOGGED_IN,
   },
   {
     path: APP_PATHS.PROFILE,
-    element: Profile,
+    element: <Profile />,
     name: "Profilee",
     status: STATUS.LOGGED_IN,
   },
   {
     path: APP_PATHS.SIGN_UP,
-    element: SignUp,
+    element: (
+      <UnauthenticatedWrapper>
+        <SignUp />
+      </UnauthenticatedWrapper>
+    ),
     name: "Sign Up",
     status: STATUS.NOT_LOGGED_IN,
   },
   {
     path: APP_PATHS.SINGLE_PROCESS,
-    element: SingleProcess,
+    element: <SingleProcess />,
     name: "Doesnt matter now",
     status: STATUS.LOGGED_IN,
   },
   {
     path: APP_PATHS.SINGLE_GOAL,
-    element: SingleGoal,
+    element: <SingleGoal />,
     name: "Single Goal",
     status: STATUS.LOGGED_IN,
   },

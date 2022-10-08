@@ -5,13 +5,17 @@ const UserContext = createContext();
 
 export default function UserWrapper({ children }) {
   const [user, setUser] = useState(undefined);
+  console.log("user:", user);
 
   function authenticate({ user, token }) {
     setUser(user);
     localStorage.setItem("ACCESS_TOKEN_SUPER_SAFE", token);
   }
 
-  function logout() {}
+  function logout() {
+    localStorage.removeItem("ACCESS_TOKEN_SUPER_SAFE");
+    setUser(undefined);
+  }
 
   useEffect(() => {
     apiClient

@@ -4,7 +4,7 @@ import ROUTES, { STATUS } from "../routes";
 import { useUser } from "../context/user.context";
 
 function Navbar() {
-  const { user } = useUser();
+  const { user, logout } = useUser();
 
   return (
     <div>
@@ -25,6 +25,16 @@ function Navbar() {
             </Link>
           );
         })}
+
+        {user && (
+          <button
+            onClick={() => {
+              logout();
+            }}
+          >
+            Logout
+          </button>
+        )}
       </nav>
       {user && <p>Hey {user.username}</p>}
     </div>
