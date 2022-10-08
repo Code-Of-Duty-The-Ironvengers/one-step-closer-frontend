@@ -5,7 +5,8 @@ const UserContext = createContext();
 
 export default function UserWrapper({ children }) {
   const [user, setUser] = useState(undefined);
-  console.log("user:", user);
+  const [isLoadingUserState, setIsLoadingUserState] = useState(true);
+  console.log("isLoadingUserState:", isLoadingUserState);
 
   function authenticate({ user, token }) {
     setUser(user);
@@ -23,8 +24,17 @@ export default function UserWrapper({ children }) {
       .then((result) => {
         setUser(result.data.user);
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setIsLoadingUserState(false);
+      });
   }, []);
+
+  if (isLoadingUserState) {
+    return <h1>loading...</h1>;
+  }
 
   return (
     <UserContext.Provider value={{ user, authenticate, logout }}>
