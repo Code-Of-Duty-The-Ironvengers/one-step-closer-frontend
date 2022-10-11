@@ -22,7 +22,7 @@ apiClient.interceptors.request.use((config) => {
 
 export default apiClient;
 
-apiClient.get("/");
+// apiClient.get("/");
 // hears what you want
 // checks if there are interceptors defined
 // if so, execute interceptros

@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams, Navigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import apiClient from "../service/api-client";
 
 // The objective of the practice is to, with an API call, retrieve the info from this single goal
 // You will need to do something on the backend to search for the specific goal and send the correct version
@@ -8,35 +8,22 @@ import { useLocation, useParams, Navigate } from "react-router-dom";
 
 function SingleGoal() {
   const [data, setData] = useState({});
+  console.log("data:", data);
   // const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  console.log("isLoading:", isLoading);
   const [isError, setIsError] = useState(false);
+  console.log("isError:", isError);
   const { title } = useParams();
-  // const location = useLocation();
+  console.log("title:", title);
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-
-  //   axios
-  //     .get(`http://localhost:5005/dashboard`)
-  //     .then((result) => {
-  //       setData(result.data.goals);
-  //     })
-  //     .catch((err) => {
-  //       console.log("err:", err);
-  //       setIsError(true);
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     });
-  // }, [title]);
   useEffect(() => {
     setIsLoading(true);
 
-    axios
-      .get(`http://localhost:5005/dashboard/${title}`)
+    apiClient
+      .get(`/dashboard/${title}`)
       .then((result) => {
-        setData(result.data.goal);
+        setData(result.data);
       })
       .catch((err) => {
         console.log("err:", err);

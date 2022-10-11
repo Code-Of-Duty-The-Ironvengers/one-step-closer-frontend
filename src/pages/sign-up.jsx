@@ -32,6 +32,7 @@ function SignUp() {
     // })
     //   .then((r) => r.json())
     //   .then(console.log);
+
     apiClient
       .post("/auth/signup", form)
       .then((result) => {
