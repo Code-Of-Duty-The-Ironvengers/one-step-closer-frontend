@@ -3,6 +3,7 @@ const APP_PATHS = {
   SIGN_UP: "/sign-up",
   LOG_IN: "/log-in",
   PROFILE: "/profile",
+  PROFILE_EDIT: "/profile/edit",
   DASHBOARD: "/dashboard",
   GOALS_DASHBOARD: "/dashboard/goals",
   GOALS_EDIT: "/dashboard/goals/edit",
