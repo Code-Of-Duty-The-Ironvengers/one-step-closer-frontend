@@ -8,14 +8,16 @@ import apiClient from "../service/api-client";
 
 function SingleGoal() {
   const [data, setData] = useState({});
-  console.log("data:", data);
+  // console.log("data:", data);
   // const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   console.log("isLoading:", isLoading);
+  // console.log("isLoading:", isLoading);
   const [isError, setIsError] = useState(false);
   console.log("isError:", isError);
+  // console.log("isError:", isError);
   const { title } = useParams();
-  console.log("title:", title);
+  // console.log("title:", title);
 
   useEffect(() => {
     setIsLoading(true);
