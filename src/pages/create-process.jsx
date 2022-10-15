@@ -1,7 +1,12 @@
 import React, { Fragment, useState } from "react";
 import { Navigate, useSearchParams } from "react-router-dom";
 import APP_PATHS from "../app-paths";
+import CompanyForm from "../components/company-form";
 import apiClient from "../service/api-client";
+
+function checkIfCompanyExists(company) {
+  return company.name.length !== 0;
+}
 
 function CreateProcess() {
   const [queryParams] = useSearchParams();
@@ -15,13 +20,26 @@ function CreateProcess() {
     salary: "",
     isRemote: true,
     location: "voila",
+    company: {
+      name: "",
+      desireability: "",
+      website: "",
+    },
   });
+
   console.log("form:", form);
 
   function handleChange(evt) {
     const { name, value } = evt.target;
 
     setForm({ ...form, [name]: value });
+  }
+
+  function handleCompanyChange(evt) {
+    const { name, value } = evt.target;
+    const { company } = form;
+
+    setForm({ ...form, company: { ...company, [name]: value } });
   }
 
   function handleCheckbox(evt) {
@@ -37,8 +55,12 @@ function CreateProcess() {
   function handleSubmit(evt) {
     evt.preventDefault();
 
+    const company = checkIfCompanyExists(form.company)
+      ? form.company
+      : undefined;
+
     apiClient
-      .post("/process/new", { ...form, goalSlug: slugValue })
+      .post("/process/new", { ...form, goalSlug: slugValue, company })
       .then(console.log)
       .catch(console.error);
   }
@@ -118,6 +140,11 @@ function CreateProcess() {
           />
         </label>
         <br />
+
+        <CompanyForm
+          company={form.company}
+          handleCompanyChange={handleCompanyChange}
+        />
 
         <button type="submit">Create a process</button>
       </form>
